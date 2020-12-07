@@ -1,5 +1,5 @@
 from Classes.Player import Player
-from Various.make_labyrinth import make_labyinth
+from Classes.Maze import Maze
 import getch
 
 movements = {
@@ -13,7 +13,8 @@ movements = {
 
 
 def main():
-    origin_cell = make_labyinth()
+    maze = Maze(4, 4)
+    origin_cell = maze.cells_grid[0][0]
     player = Player(origin_cell)
     winning_cell = False
     print("Begin!")

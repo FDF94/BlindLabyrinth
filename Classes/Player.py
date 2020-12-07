@@ -2,17 +2,17 @@ class Player:
 
     _cardinal_directions = ("N", "E", "S", "W")
     _relative_directions = ("Forward", "Right", "Backward", "Left")
+    _turning_dict = {
+        "Left": -1,
+        "Right": 1
+    }
 
     def __init__(self, cell):
         self.current_cell = cell
         self._facing = "N"
 
     def turn(self, direction):
-        turning_dict = {
-            "Left": -1,
-            "Right": 1
-        }
-        i = turning_dict[direction]
+        i = self._turning_dict[direction]
 
         current_index = self._cardinal_directions.index(self._facing)
         self._facing = self._cardinal_directions[

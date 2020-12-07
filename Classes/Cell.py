@@ -10,6 +10,8 @@ class Cell:
         self._south_border = south_border
         self._west_border = west_border
         self.is_winning_cell = is_winning_cell
+        # This property is useful for creating mazes
+        self.is_visited = False
 
     def go_in_direction(self, direction):
         actions = {
