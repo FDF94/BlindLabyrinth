@@ -1,6 +1,6 @@
 from Classes.Cell import Cell
 from Classes.Wall import Wall
-from typing import List
+from typing import List, Tuple
 from random import choice
 
 CellRow = List[Cell]
@@ -12,10 +12,12 @@ class Maze():
     def __init__(self, rows: int, columns: int):
         wall = Wall()
         self.cells_grid = [
-            [Cell(wall, wall, wall, wall, False) for i in range(rows)]
+            [Cell(wall, wall, wall, wall, False, i, j) for i in range(rows)]
             for j in range(columns)
         ]
         self.cells_grid[-1][-1].is_winning_cell = True
+        self._max_x = rows - 1
+        self._max_y = columns - 1
         self.generate_maze(self.cells_grid)
 
     def _is_any_cell_unvisited(self, cells_grid: CellGrid) -> bool:
@@ -25,10 +27,11 @@ class Maze():
                     return True
         return False
 
-    def _get_next_block_coordinates(
-        self, selected_direction: str,
-        x, y, max_x_value, max_y_value
-    ):
+    def _get_next_cell_coordinates(
+        self, selected_direction: str, cell: Cell
+    ) -> Tuple[int, int]:
+        x = cell.x
+        y = cell.y
         functions_dict = {
             "U": (x, y-1),
             "D": (x, y+1),
@@ -39,25 +42,25 @@ class Maze():
         result = functions_dict[selected_direction]
         checks = [
             result[0] < 0,
-            result[0] > max_x_value,
+            result[0] > self._max_x,
             result[1] < 0,
-            result[1] > max_y_value]
+            result[1] > self._max_y
+        ]
 
         if any(checks):
             raise ValueError("Direction is off limits")
 
         return result
 
-    def find_next_cell(self, cells_grid, x, y, max_x, max_y):
+    def find_next_cell(self, cells_grid: CellGrid, current_cell: Cell) -> Cell:
         directions = ["U", "D", "L", "R"]
         is_next_cell_visited = True
         while directions and is_next_cell_visited:
             try:
                 selected_direction = choice(directions)
                 print(selected_direction)
-                next_x, next_y = self._get_next_block_coordinates(
-                    selected_direction, x, y, max_x, max_y
-                )
+                next_x, next_y = self._get_next_cell_coordinates(
+                    selected_direction, current_cell)
                 next_cell = cells_grid[next_x][next_y]
                 if next_cell.is_visited:
                     directions.pop(directions.index(selected_direction))
@@ -68,49 +71,45 @@ class Maze():
                 directions.pop(directions.index(selected_direction))
 
         if directions:
-            return (next_x, next_y)
+            return next_cell
         else:
-            return None, None
+            return None
 
     def generate_maze(self, cells_grid):
-        max_x = len(cells_grid) - 1
-        max_y = len(cells_grid[0]) - 1
         current_cell = cells_grid[0][0]
-        backtrace = [(0, 0)]
-        x = 0
-        y = 0
+        backtrace = [current_cell]
 
         while True:
             current_cell.is_visited = True
-            next_x, next_y = self.find_next_cell(
-                cells_grid, x, y, max_x, max_y
-            )
+            next_cell = self.find_next_cell(cells_grid, current_cell)
 
-            if next_x:
-                next_cell = cells_grid[next_x][next_y]
+            if next_cell:
                 next_cell.is_visited = True
-                self.break_down_wall(cells_grid, x, y, next_x, next_y)
-                x = next_x
-                y = next_y
-                backtrace.append((x, y))
+                self.break_down_wall(current_cell, next_cell)
+                backtrace.append(next_cell)
             elif backtrace:
-                x, y = backtrace.pop()
+                current_cell = backtrace.pop()
             elif not backtrace:
                 break
 
-    def break_down_wall(self, cells_grid, x1, y1, x2, y2):
+    def break_down_wall(self, first_cell, second_cell):
+        x1 = first_cell.x
+        y1 = first_cell.y
+        x2 = second_cell.x
+        y2 = second_cell.y
+
         row_dif = x2 - x1
         col_dif = y2 - y1
 
         if row_dif == 1:
-            cells_grid[x1][y1]._east_border = cells_grid[x2][y2]
-            cells_grid[x2][y2]._west_border = cells_grid[x1][y1]
+            first_cell._east_border = second_cell
+            second_cell._west_border = first_cell
         elif row_dif == -1:
-            cells_grid[x1][y1]._west_border = cells_grid[x2][y2]
-            cells_grid[x2][y2]._east_border = cells_grid[x1][y1]
+            first_cell._west_border = second_cell
+            second_cell._east_border = first_cell
         elif col_dif == 1:
-            cells_grid[x1][y1]._south_border = cells_grid[x2][y2]
-            cells_grid[x2][y2]._north_border = cells_grid[x1][y1]
+            first_cell._south_border = second_cell
+            second_cell._north_border = first_cell
         elif col_dif == -1:
-            cells_grid[x1][y1]._north_border = cells_grid[x2][y2]
-            cells_grid[x2][y2]._south_border = cells_grid[x1][y1]
+            first_cell._north_border = second_cell
+            second_cell._south_border = first_cell

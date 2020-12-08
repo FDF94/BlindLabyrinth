@@ -3,7 +3,8 @@ class Cell:
     def __init__(
         self, north_border,
         east_border, south_border,
-        west_border, is_winning_cell
+        west_border, is_winning_cell,
+        x, y
     ):
         self._north_border = north_border
         self._east_border = east_border
@@ -12,6 +13,8 @@ class Cell:
         self.is_winning_cell = is_winning_cell
         # This property is useful for creating mazes
         self.is_visited = False
+        self.x = x
+        self.y = y
 
     def go_in_direction(self, direction):
         actions = {
