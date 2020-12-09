@@ -12,7 +12,7 @@ class Maze():
     def __init__(self, rows: int, columns: int):
         wall = Wall()
         self.cells_grid = [
-            [Cell(wall, wall, wall, wall, False, i, j) for i in range(rows)]
+            [Cell(wall, wall, wall, wall, False, j, i) for i in range(rows)]
             for j in range(columns)
         ]
         self.cells_grid[-1][-1].is_winning_cell = True
@@ -30,21 +30,21 @@ class Maze():
     def _get_next_cell_coordinates(
         self, selected_direction: str, cell: Cell
     ) -> Tuple[int, int]:
-        x = cell.x
-        y = cell.y
+        x = cell.row
+        y = cell.col
         functions_dict = {
-            "U": (x, y-1),
-            "D": (x, y+1),
-            "L": (x-1, y),
-            "R": (x+1, y),
+            "U": (x-1, y),
+            "D": (x+1, y),
+            "L": (x, y-1),
+            "R": (x, y+1),
         }
 
         result = functions_dict[selected_direction]
         checks = [
             result[0] < 0,
-            result[0] > self._max_x,
+            result[0] > self._max_y,
             result[1] < 0,
-            result[1] > self._max_y
+            result[1] > self._max_x
         ]
 
         if any(checks):
@@ -86,6 +86,7 @@ class Maze():
             if next_cell:
                 next_cell.is_visited = True
                 self.break_down_wall(current_cell, next_cell)
+                current_cell = next_cell
                 backtrace.append(next_cell)
             elif backtrace:
                 current_cell = backtrace.pop()
@@ -93,23 +94,23 @@ class Maze():
                 break
 
     def break_down_wall(self, first_cell, second_cell):
-        x1 = first_cell.x
-        y1 = first_cell.y
-        x2 = second_cell.x
-        y2 = second_cell.y
+        x1 = first_cell.row
+        y1 = first_cell.col
+        x2 = second_cell.row
+        y2 = second_cell.col
 
         row_dif = x2 - x1
         col_dif = y2 - y1
 
-        if row_dif == 1:
+        if col_dif == 1:
             first_cell._east_border = second_cell
             second_cell._west_border = first_cell
-        elif row_dif == -1:
+        elif col_dif == -1:
             first_cell._west_border = second_cell
             second_cell._east_border = first_cell
-        elif col_dif == 1:
+        elif row_dif == 1:
             first_cell._south_border = second_cell
             second_cell._north_border = first_cell
-        elif col_dif == -1:
+        elif row_dif == -1:
             first_cell._north_border = second_cell
             second_cell._south_border = first_cell
