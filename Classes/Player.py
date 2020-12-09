@@ -11,7 +11,7 @@ class Player:
         self.current_cell = cell
         self._facing = "N"
 
-    def turn(self, direction):
+    def turn(self, direction: str) -> None:
         i = self._turning_dict[direction]
 
         current_index = self._cardinal_directions.index(self._facing)
@@ -20,10 +20,20 @@ class Player:
         ]
         print(f"Now facing {self._facing}")
 
-    def go_in_direction(self, direction):
+    def go_in_direction(self, direction: str) -> None:
         direction_index = self._relative_directions.index(direction)
         current_cardinal_index = self._cardinal_directions.index(self._facing)
         cardinal_index = (direction_index + current_cardinal_index) % 4
+
         self.current_cell = self.current_cell.go_in_direction(
+            self._cardinal_directions[cardinal_index]
+        )
+
+    def knock_in_direction(self, direction: str) -> None:
+        direction_index = self._relative_directions.index(direction)
+        current_cardinal_index = self._cardinal_directions.index(self._facing)
+        cardinal_index = (direction_index + current_cardinal_index) % 4
+
+        self.current_cell.knock_in_direction(
             self._cardinal_directions[cardinal_index]
         )
