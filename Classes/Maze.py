@@ -15,7 +15,7 @@ class Maze():
             [Cell(wall, wall, wall, wall, False, j, i) for i in range(rows)]
             for j in range(columns)
         ]
-        self.cells_grid[-1][-1].is_winning_cell = True
+        self.cells_grid[0][0].is_winning_cell = True
         self._max_x = rows - 1
         self._max_y = columns - 1
         self.generate_maze(self.cells_grid)

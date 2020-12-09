@@ -9,15 +9,19 @@ movements = {
     "A": lambda x: x.go_in_direction("Left"),
     "S": lambda x: x.go_in_direction("Backward"),
     "D": lambda x: x.go_in_direction("Right"),
+    "J": lambda x: x.knock_in_direction("Left"),
+    "L": lambda x: x.knock_in_direction("Right"),
 }
 
 
 def main():
-    maze = Maze(4, 4)
-    origin_cell = maze.cells_grid[0][0]
+
+    maze = Maze(3, 3)
+    origin_cell = maze.cells_grid[-1][-1]
     player = Player(origin_cell)
     winning_cell = False
-    print("Begin!")
+    print("\nBegin!")
+
     while not winning_cell:
         movement = getch.getch().upper()
         movements[movement](player)
