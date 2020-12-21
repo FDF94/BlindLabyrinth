@@ -130,3 +130,6 @@ dmypy.json
 
 # Jupyter Notebooks
 *.ipynb
+
+# No need to update sounds for now
+*.mp3
