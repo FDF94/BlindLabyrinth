@@ -1,10 +1,15 @@
 class Wall:
 
     def __init__(self):
-        pass
+        self._observers = []
+
+    def subscribe(self, subscriber):
+        self._observers.append(subscriber)
 
     def walk_into(self) -> None:
-        print("Ouch, there's a wall")
+        for x in self._observers:
+            x.wall_contact("walk_into")
 
     def knock(self) -> None:
-        print("Knock knock")
+        for x in self._observers:
+            x.wall_contact("knock")

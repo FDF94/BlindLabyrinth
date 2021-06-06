@@ -11,6 +11,7 @@ class Player:
         self.current_cell = cell
         self._facing = "N"
         self._beeper = beeper
+        self._observers = []
 
     def turn(self, direction: str) -> None:
         i = self._turning_dict[direction]
@@ -19,7 +20,8 @@ class Player:
         self._facing = self._cardinal_directions[
             (current_index + i) % len(self._cardinal_directions)
         ]
-        print(f"Now facing {self._facing}")
+        for x in self._observers:
+            x.player_event("turn", self._facing)
 
     def go_in_direction(self, direction: str) -> None:
         direction_index = self._relative_directions.index(direction)
@@ -41,7 +43,12 @@ class Player:
 
     def set_beeper(self):
         if self._beeper:
+            self._beeper.is_set = True
             self.current_cell.place_beeper(self._beeper)
             self._beeper = None
         else:
-            print("No beeper left")
+            for x in self._observers:
+                x.player_event("no_beep")
+
+    def subscribe(self, subscriber):
+        self._observers.append(subscriber)

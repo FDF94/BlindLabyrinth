@@ -2,6 +2,7 @@ from Classes.Player import Player
 from Classes.Maze import Maze
 from Classes.Counter import Counter
 from Classes.Beeper import Beeper
+from View.View import View
 from HardwareControl.helper_functions import handle_input
 
 movements = {
@@ -14,27 +15,30 @@ movements = {
     "J": lambda x: x.knock_in_direction("Left"),
     "L": lambda x: x.knock_in_direction("Right"),
     "B": lambda x: x.set_beeper(),
-    "": lambda x: print("Standing here, doing nothing")
 }
 
 
 def main():
     # Initialize all objects
+    view = View()
     counter = Counter()
     beeper = Beeper()
-    maze = Maze(3, 3)
+    maze = Maze(3, 3, view)
     origin_cell = maze.cells_grid[-1][-1]
     player = Player(origin_cell, beeper)
     winning_cell = False
 
     # Make subscriptions
     counter.subscribe(beeper)
+    beeper.subscribe(view)
+    player.subscribe(view)
     print("\nBegin!")
 
     while not winning_cell:
         counter.tick()
         movement = handle_input()
-        movements[movement](player)
+        if movement:
+            movements[movement](player)
         winning_cell = player.current_cell.is_winning_cell
 
     print("Congrats! You win!")

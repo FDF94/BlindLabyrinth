@@ -20,6 +20,7 @@ class Cell:
         self.col = col
         self._has_puddle = choices([True, False], cum_weights=[1, 11])[0]
         self._beeper = None
+        self._observers = []
 
     def go_in_direction(self, direction):
         actions = {
@@ -30,6 +31,8 @@ class Cell:
         }
         next_cell = actions[direction]()
         if next_cell is not None:
+            if self._beeper:
+                self._beeper.beeps_allowed = False
             return next_cell
         else:
             return self
@@ -44,15 +47,21 @@ class Cell:
         actions[direction]()
 
     def knock(self) -> None:
-        print("Whoosh!")
+        for x in self._observers:
+            x.cell_event("whoosh")
 
     def walk_into(self):
         if self._has_puddle:
-            print("Splash!")
+            for x in self._observers:
+                x.cell_event("puddle")
+
         if self._beeper:
-            self._beeper.beep()
+            self._beeper.beeps_allowed = True
         return self
 
     def place_beeper(self, beeper):
         self._beeper = beeper
-        self._beeper.subscribe(print("Beep"))
+        self._beeper.beeps_allowed = True
+
+    def subscribe(self, subscriber):
+        self._observers.append(subscriber)

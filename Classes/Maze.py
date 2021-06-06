@@ -9,8 +9,9 @@ CellGrid = List[CellRow]
 
 class Maze():
 
-    def __init__(self, rows: int, columns: int):
+    def __init__(self, rows: int, columns: int, view):
         wall = Wall()
+        wall.subscribe(view)
         self.cells_grid = [
             [Cell(wall, wall, wall, wall, False, j, i) for i in range(rows)]
             for j in range(columns)
@@ -18,6 +19,9 @@ class Maze():
         self.cells_grid[0][0].is_winning_cell = True
         self._max_x = rows - 1
         self._max_y = columns - 1
+        for row in self.cells_grid:
+            for cell in row:
+                cell.subscribe(view)
         self.generate_maze(self.cells_grid)
 
     def _is_any_cell_unvisited(self, cells_grid: CellGrid) -> bool:
@@ -58,7 +62,6 @@ class Maze():
         while directions and is_next_cell_visited:
             try:
                 selected_direction = choice(directions)
-                print(selected_direction)
                 next_x, next_y = self._get_next_cell_coordinates(
                     selected_direction, current_cell)
                 next_cell = cells_grid[next_x][next_y]
