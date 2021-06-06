@@ -1,7 +1,13 @@
+from Classes.Sound import Sound
+
+
 class View:
 
-    def beep_event(self):
-        print("Beep!")
+    def sound_event(self, sound: Sound):
+        print(f"You hear {sound.sound}, coming " +
+              f"from the {sound.direction}")
+        if sound.is_muffled:
+            print("It comes from behind a wall")
 
     # Wall events
     def knock_event(self):

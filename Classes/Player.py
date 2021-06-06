@@ -1,4 +1,6 @@
 from Classes.Event import Event
+from Classes.Cell import Cell
+from Classes.Beeper import Beeper
 
 
 class Player:
@@ -10,7 +12,7 @@ class Player:
         "Right": 1
     }
 
-    def __init__(self, cell, beeper):
+    def __init__(self, cell: Cell, beeper: Beeper):
         self.current_cell = cell
         self._facing = "N"
         self._beeper = beeper
@@ -48,11 +50,7 @@ class Player:
 
     def set_beeper(self):
         if self._beeper:
-            self._beeper.is_set = True
-            self.current_cell.place_beeper(self._beeper)
+            self._beeper.set_beeper(self.current_cell)
             self._beeper = None
         else:
             self.no_beeper_event()
-
-    def subscribe(self, subscriber):
-        self._observers.append(subscriber)

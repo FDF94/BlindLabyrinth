@@ -1,3 +1,4 @@
+from GameState.GameState import GameState
 from Classes.Player import Player
 from Classes.Maze import Maze
 from Classes.Counter import Counter
@@ -27,10 +28,12 @@ def main():
     origin_cell = maze.cells_grid[-1][-1]
     player = Player(origin_cell, beeper)
     winning_cell = False
+    gameState = GameState(player, maze)
 
     # Make subscriptions
     counter.tick_event += beeper.count
-    beeper.beep_event += view.beep_event
+    beeper.beep_event += gameState.beep_event
+    gameState.sound_event += view.sound_event
     player.turn_event += view.turn_event
     player.no_beeper_event += view.no_beeper_event
     print("\nBegin!")
