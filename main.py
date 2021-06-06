@@ -29,9 +29,10 @@ def main():
     winning_cell = False
 
     # Make subscriptions
-    counter.subscribe(beeper)
-    beeper.subscribe(view)
-    player.subscribe(view)
+    counter.tick_event += beeper.count
+    beeper.beep_event += view.beep_event
+    player.turn_event += view.turn_event
+    player.no_beeper_event += view.no_beeper_event
     print("\nBegin!")
 
     while not winning_cell:

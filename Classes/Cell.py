@@ -1,4 +1,5 @@
 from random import choices
+from Classes.Event import Event
 
 
 class Cell:
@@ -20,7 +21,10 @@ class Cell:
         self.col = col
         self._has_puddle = choices([True, False], cum_weights=[1, 11])[0]
         self._beeper = None
-        self._observers = []
+
+        # Events
+        self.puddle_event = Event()
+        self.whoosh_event = Event()
 
     def go_in_direction(self, direction):
         actions = {
@@ -47,13 +51,11 @@ class Cell:
         actions[direction]()
 
     def knock(self) -> None:
-        for x in self._observers:
-            x.cell_event("whoosh")
+        self.whoosh_event.notify()
 
     def walk_into(self):
         if self._has_puddle:
-            for x in self._observers:
-                x.cell_event("puddle")
+            self.puddle_event.notify()
 
         if self._beeper:
             self._beeper.beeps_allowed = True
@@ -62,6 +64,3 @@ class Cell:
     def place_beeper(self, beeper):
         self._beeper = beeper
         self._beeper.beeps_allowed = True
-
-    def subscribe(self, subscriber):
-        self._observers.append(subscriber)

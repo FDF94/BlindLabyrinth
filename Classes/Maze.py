@@ -1,5 +1,6 @@
 from Classes.Cell import Cell
 from Classes.Wall import Wall
+from View.View import View
 from typing import List, Tuple
 from random import choice
 
@@ -9,9 +10,8 @@ CellGrid = List[CellRow]
 
 class Maze():
 
-    def __init__(self, rows: int, columns: int, view):
+    def __init__(self, rows: int, columns: int, view: View):
         wall = Wall()
-        wall.subscribe(view)
         self.cells_grid = [
             [Cell(wall, wall, wall, wall, False, j, i) for i in range(rows)]
             for j in range(columns)
@@ -19,9 +19,16 @@ class Maze():
         self.cells_grid[0][0].is_winning_cell = True
         self._max_x = rows - 1
         self._max_y = columns - 1
+
+        # Events subscription
+        # ToDo this should definitely not be here
+        wall.knock_event += view.knock_event
+        wall.walk_into_event += view.walk_into_event
         for row in self.cells_grid:
             for cell in row:
-                cell.subscribe(view)
+                cell.puddle_event += view.puddle_event
+                cell.whoosh_event += view.whoosh_event
+
         self.generate_maze(self.cells_grid)
 
     def _is_any_cell_unvisited(self, cells_grid: CellGrid) -> bool:

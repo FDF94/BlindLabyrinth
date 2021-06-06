@@ -1,25 +1,25 @@
 class View:
 
-    def receive_beep(self):
+    def beep_event(self):
         print("Beep!")
 
-    def wall_contact(self, event):
-        events = {
-            "walk_into": lambda: print("Ouch, there's a wall"),
-            "knock": lambda: print("Knock knock")
-        }
-        events[event]()
+    # Wall events
+    def knock_event(self):
+        print("Knock knock")
 
-    def cell_event(self, event):
-        events = {
-            "whoosh": lambda: print("Whoosh!"),
-            "puddle": lambda: print("Splash!")
-        }
-        events[event]()
+    def walk_into_event(self):
+        print("Ouch, there's a wall")
 
-    def player_event(self, event, args):
-        events = {
-            "no_beep": lambda x: print("No beeper left :("),
-            "turn": lambda direction: print(f"Now facing {direction}")
-        }
-        events[event](args)
+    # Cell events
+    def whoosh_event(self):
+        print("Whoosh!")
+
+    def puddle_event(self):
+        print("Splash!")
+
+    # Player events
+    def no_beeper_event(self):
+        print("No beeper left :(")
+
+    def turn_event(self, direction):
+        print(f"Now facing {direction}")

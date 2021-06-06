@@ -1,3 +1,6 @@
+from Classes.Event import Event
+
+
 class Player:
 
     _cardinal_directions = ("N", "E", "S", "W")
@@ -11,7 +14,10 @@ class Player:
         self.current_cell = cell
         self._facing = "N"
         self._beeper = beeper
-        self._observers = []
+
+        # Events
+        self.turn_event = Event()
+        self.no_beeper_event = Event()
 
     def turn(self, direction: str) -> None:
         i = self._turning_dict[direction]
@@ -20,8 +26,7 @@ class Player:
         self._facing = self._cardinal_directions[
             (current_index + i) % len(self._cardinal_directions)
         ]
-        for x in self._observers:
-            x.player_event("turn", self._facing)
+        self.turn_event.notify(self._facing)
 
     def go_in_direction(self, direction: str) -> None:
         direction_index = self._relative_directions.index(direction)
@@ -47,8 +52,7 @@ class Player:
             self.current_cell.place_beeper(self._beeper)
             self._beeper = None
         else:
-            for x in self._observers:
-                x.player_event("no_beep")
+            self.no_beeper_event()
 
     def subscribe(self, subscriber):
         self._observers.append(subscriber)

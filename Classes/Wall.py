@@ -1,15 +1,14 @@
+from Classes.Event import Event
+
+
 class Wall:
 
     def __init__(self):
-        self._observers = []
-
-    def subscribe(self, subscriber):
-        self._observers.append(subscriber)
+        self.walk_into_event = Event()
+        self.knock_event = Event()
 
     def walk_into(self) -> None:
-        for x in self._observers:
-            x.wall_contact("walk_into")
+        self.walk_into_event.notify()
 
     def knock(self) -> None:
-        for x in self._observers:
-            x.wall_contact("knock")
+        self.knock_event.notify()
