@@ -7,9 +7,10 @@ class Player:
         "Right": 1
     }
 
-    def __init__(self, cell):
+    def __init__(self, cell, beeper):
         self.current_cell = cell
         self._facing = "N"
+        self._beeper = beeper
 
     def turn(self, direction: str) -> None:
         i = self._turning_dict[direction]
@@ -37,3 +38,10 @@ class Player:
         self.current_cell.knock_in_direction(
             self._cardinal_directions[cardinal_index]
         )
+
+    def set_beeper(self):
+        if self._beeper:
+            self.current_cell.place_beeper(self._beeper)
+            self._beeper = None
+        else:
+            print("No beeper left")
