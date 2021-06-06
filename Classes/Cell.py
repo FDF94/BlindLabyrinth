@@ -1,3 +1,6 @@
+from random import choices
+
+
 class Cell:
 
     def __init__(
@@ -15,6 +18,8 @@ class Cell:
         self.is_visited = False
         self.row = row
         self.col = col
+        self._has_puddle = choices([True, False], cum_weights=[1, 11])[0]
+        self._beeper = None
 
     def go_in_direction(self, direction):
         actions = {
@@ -42,5 +47,12 @@ class Cell:
         print("Whoosh!")
 
     def walk_into(self):
-        print(self.row, self.col)
+        if self._has_puddle:
+            print("Splash!")
+        if self._beeper:
+            self._beeper.beep()
         return self
+
+    def place_beeper(self, beeper):
+        self._beeper = beeper
+        self._beeper.subscribe(print("Beep"))
