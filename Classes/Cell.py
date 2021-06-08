@@ -1,14 +1,15 @@
 from random import choices
 from Classes.Event import Event
+from Classes.CellLimit import CellLimit
 
 
-class Cell:
+class Cell(CellLimit):
 
     def __init__(
-        self, north_border,
-        east_border, south_border,
-        west_border, is_winning_cell,
-        row, col
+        self, north_border: CellLimit,
+        east_border: CellLimit, south_border: CellLimit,
+        west_border: CellLimit, is_winning_cell: CellLimit,
+        row: int, col: int
     ):
         self._borders = {
             "N": north_border,

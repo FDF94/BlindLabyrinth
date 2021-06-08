@@ -1,7 +1,8 @@
 from Classes.Event import Event
+from Classes.CellLimit import CellLimit
 
 
-class Wall:
+class Wall(CellLimit):
 
     def __init__(self):
         self.walk_into_event = Event()
