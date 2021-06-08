@@ -1,6 +1,7 @@
 from random import choices
 from Classes.Event import Event
 from Classes.CellLimit import CellLimit
+from GameState.CardinalDirections import CardinalDirections as CD
 
 
 class Cell(CellLimit):
@@ -12,10 +13,10 @@ class Cell(CellLimit):
         row: int, col: int
     ):
         self._borders = {
-            "N": north_border,
-            "S": south_border,
-            "E": east_border,
-            "W": west_border,
+            CD.NORTH: north_border,
+            CD.SOUTH: south_border,
+            CD.EAST: east_border,
+            CD.WEST: west_border,
         }
         self.is_winning_cell = is_winning_cell
         # This property is useful for creating mazes

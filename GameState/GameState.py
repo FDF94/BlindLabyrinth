@@ -4,6 +4,7 @@ from Classes.Event import Event
 from Classes.Player import Player
 from Classes.Maze import Maze
 from Classes.Sound import Sound
+from GameState.CardinalDirections import CardinalDirections as CD
 
 
 class GameState:
@@ -57,10 +58,10 @@ class GameState:
         dif = (second_row - first_row, second_col - first_col)
         results = {
             (0, 0): "your place",
-            (1, 0): "S",
-            (-1, 0): "N",
-            (0, -1): "W",
-            (0, 1): "E",
+            (1, 0): CD.SOUTH,
+            (-1, 0): CD.NORTH,
+            (0, -1): CD.WEST,
+            (0, 1): CD.EAST,
         }
         try:
             return results[dif]

@@ -3,6 +3,7 @@ from Classes.Wall import Wall
 from View.View import View
 from typing import List, Tuple
 from random import choice
+from GameState.CardinalDirections import CardinalDirections as CD
 
 CellRow = List[Cell]
 CellGrid = List[CellRow]
@@ -116,14 +117,14 @@ class Maze():
         # properties
 
         if col_dif == 1:
-            first_cell._borders["E"] = second_cell
-            second_cell._borders["W"] = first_cell
+            first_cell._borders[CD.EAST] = second_cell
+            second_cell._borders[CD.WEST] = first_cell
         elif col_dif == -1:
-            first_cell._borders["W"] = second_cell
-            second_cell._borders["E"] = first_cell
+            first_cell._borders[CD.WEST] = second_cell
+            second_cell._borders[CD.EAST] = first_cell
         elif row_dif == 1:
-            first_cell._borders["S"] = second_cell
-            second_cell._borders["N"] = first_cell
+            first_cell._borders[CD.SOUTH] = second_cell
+            second_cell._borders[CD.NORTH] = first_cell
         elif row_dif == -1:
-            first_cell._borders["N"] = second_cell
-            second_cell._borders["S"] = first_cell
+            first_cell._borders[CD.NORTH] = second_cell
+            second_cell._borders[CD.SOUTH] = first_cell

@@ -1,11 +1,12 @@
 from Classes.Event import Event
 from Classes.Cell import Cell
 from Classes.Beeper import Beeper
+from GameState.CardinalDirections import CardinalDirections as CD
 
 
 class Player:
 
-    _cardinal_directions = ("N", "E", "S", "W")
+    _cardinal_directions = (CD.NORTH, CD.EAST, CD.SOUTH, CD.WEST)
     _relative_directions = ("Forward", "Right", "Backward", "Left")
     _turning_dict = {
         "Left": -1,
@@ -14,7 +15,7 @@ class Player:
 
     def __init__(self, cell: Cell, beeper: Beeper):
         self.current_cell = cell
-        self._facing = "N"
+        self._facing = CD.NORTH
         self._beeper = beeper
 
         # Events
