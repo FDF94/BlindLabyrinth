@@ -19,7 +19,7 @@ class GameState:
         self.is_won = True
         self.win_event.notify()
 
-    def beep_event(self, beeper_row, beeper_col):
+    def beep_event(self, beeper_row: int, beeper_col: int):
         relative_direction = self._get_relative_direction(
             self._player.current_cell.row,
             self._player.current_cell.col,

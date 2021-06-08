@@ -10,7 +10,7 @@ class Beeper:
         self._is_set = False
         self._cell = None
 
-    def count(self, count):
+    def count(self, count: int):
         if(count % 5 == 0 and self._is_set):
             self.beep_event.notify(self._cell.row, self._cell.col)
 

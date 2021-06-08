@@ -85,7 +85,7 @@ class Maze():
         else:
             return None
 
-    def generate_maze(self, cells_grid):
+    def generate_maze(self, cells_grid: CellGrid):
         current_cell = cells_grid[0][0]
         backtrace = [current_cell]
 
@@ -103,7 +103,7 @@ class Maze():
             elif not backtrace:
                 break
 
-    def break_down_wall(self, first_cell, second_cell):
+    def break_down_wall(self, first_cell: Cell, second_cell: Cell):
         x1 = first_cell.row
         y1 = first_cell.col
         x2 = second_cell.row
