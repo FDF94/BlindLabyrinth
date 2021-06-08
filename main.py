@@ -4,7 +4,7 @@ from Classes.Maze import Maze
 from Classes.Counter import Counter
 from Classes.Beeper import Beeper
 from View.View import View
-from HardwareControl.helper_functions import handle_input
+from HardwareControl.WindowsInput import handle_input
 
 movements = {
     "E": lambda x: x.turn("Right"),
@@ -28,12 +28,12 @@ def main():
     origin_cell = maze.cells_grid[-1][-1]
     player = Player(origin_cell, beeper)
     winning_cell = False
-    gameState = GameState(player, maze)
+    game_state = GameState(player, maze)
 
     # Make subscriptions
     counter.tick_event += beeper.count
-    beeper.beep_event += gameState.beep_event
-    gameState.sound_event += view.sound_event
+    beeper.beep_event += game_state.beep_event
+    game_state.sound_event += view.sound_event
     player.turn_event += view.turn_event
     player.no_beeper_event += view.no_beeper_event
     print("\nBegin!")
