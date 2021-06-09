@@ -1,4 +1,4 @@
-from Classes.Sound import Sound
+from Infrastructure.Sound import Sound
 
 
 class View:

@@ -1,6 +1,6 @@
-from Classes.Event import Event
-from Classes.Cell import Cell
-from Classes.Beeper import Beeper
+from Infrastructure.Event import Event
+from GameEntities.Cell import Cell
+from GameEntities.Beeper import Beeper
 from GameState.CardinalDirections import CardinalDirections as CD
 
 

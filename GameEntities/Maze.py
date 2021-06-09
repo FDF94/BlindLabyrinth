@@ -1,5 +1,5 @@
-from Classes.Cell import Cell
-from Classes.Wall import Wall
+from GameEntities.Cell import Cell
+from GameEntities.Wall import Wall
 from View.View import View
 from typing import List, Tuple
 from random import choice

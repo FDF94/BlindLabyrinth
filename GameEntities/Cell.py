@@ -1,6 +1,6 @@
 from random import choices
-from Classes.Event import Event
-from Classes.CellLimit import CellLimit
+from Infrastructure.Event import Event
+from GameEntities.CellLimit import CellLimit
 from GameState.CardinalDirections import CardinalDirections as CD
 
 

@@ -1,8 +1,8 @@
 from GameState.GameState import GameState
-from Classes.Player import Player
-from Classes.Maze import Maze
-from Classes.Counter import Counter
-from Classes.Beeper import Beeper
+from GameEntities.Player import Player
+from GameEntities.Maze import Maze
+from GameEntities.Counter import Counter
+from GameEntities.Beeper import Beeper
 from View.View import View
 from HardwareControl.WindowsInput import handle_input
 

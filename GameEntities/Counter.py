@@ -1,4 +1,4 @@
-from Classes.Event import Event
+from Infrastructure.Event import Event
 
 
 class Counter:

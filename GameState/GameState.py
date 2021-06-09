@@ -1,9 +1,9 @@
-from Classes.Cell import Cell
-from Classes.Wall import Wall
-from Classes.Event import Event
-from Classes.Player import Player
-from Classes.Maze import Maze
-from Classes.Sound import Sound
+from GameEntities.Cell import Cell
+from GameEntities.Wall import Wall
+from GameEntities.Player import Player
+from GameEntities.Maze import Maze
+from Infrastructure.Sound import Sound
+from Infrastructure.Event import Event
 from GameState.CardinalDirections import CardinalDirections as CD
 
 

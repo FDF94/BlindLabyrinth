@@ -1,5 +1,5 @@
-from Classes.Event import Event
-from Classes.Cell import Cell
+from Infrastructure.Event import Event
+from GameEntities.Cell import Cell
 
 
 class Beeper:

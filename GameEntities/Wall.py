@@ -1,5 +1,5 @@
-from Classes.Event import Event
-from Classes.CellLimit import CellLimit
+from Infrastructure.Event import Event
+from GameEntities.CellLimit import CellLimit
 
 
 class Wall(CellLimit):
