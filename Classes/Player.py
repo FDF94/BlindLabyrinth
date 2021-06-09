@@ -54,4 +54,4 @@ class Player:
             self._beeper.set_beeper(self.current_cell)
             self._beeper = None
         else:
-            self.no_beeper_event()
+            self.no_beeper_event.notify()
