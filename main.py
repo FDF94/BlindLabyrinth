@@ -42,7 +42,10 @@ def main():
         counter.tick()
         movement = handle_input()
         if movement:
-            movements[movement](player)
+            try:
+                movements[movement](player)
+            except KeyError:
+                continue
         winning_cell = player.current_cell.is_winning_cell
 
     print("Congrats! You win!")
