@@ -40,8 +40,7 @@ class GameState:
             )
 
     def _is_wall(self, cell: Cell, relative_direction: str):
-        # ToDo refactor to not check private member
-        return type(cell._borders[relative_direction]) == Wall
+        return type(cell.borders[relative_direction]) == Wall
 
     def _get_relative_direction(
             self,

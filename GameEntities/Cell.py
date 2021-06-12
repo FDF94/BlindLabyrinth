@@ -12,7 +12,7 @@ class Cell(CellLimit):
         west_border: CellLimit, is_winning_cell: CellLimit,
         row: int, col: int
     ):
-        self._borders = {
+        self.borders = {
             CD.NORTH: north_border,
             CD.SOUTH: south_border,
             CD.EAST: east_border,

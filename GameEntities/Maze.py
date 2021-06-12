@@ -113,18 +113,15 @@ class Maze():
         row_dif = x2 - x1
         col_dif = y2 - y1
 
-        # ToDo: refactor to avoid using modifying private
-        # properties
-
         if col_dif == 1:
-            first_cell._borders[CD.EAST] = second_cell
-            second_cell._borders[CD.WEST] = first_cell
+            first_cell.borders[CD.EAST] = second_cell
+            second_cell.borders[CD.WEST] = first_cell
         elif col_dif == -1:
-            first_cell._borders[CD.WEST] = second_cell
-            second_cell._borders[CD.EAST] = first_cell
+            first_cell.borders[CD.WEST] = second_cell
+            second_cell.borders[CD.EAST] = first_cell
         elif row_dif == 1:
-            first_cell._borders[CD.SOUTH] = second_cell
-            second_cell._borders[CD.NORTH] = first_cell
+            first_cell.borders[CD.SOUTH] = second_cell
+            second_cell.borders[CD.NORTH] = first_cell
         elif row_dif == -1:
-            first_cell._borders[CD.NORTH] = second_cell
-            second_cell._borders[CD.SOUTH] = first_cell
+            first_cell.borders[CD.NORTH] = second_cell
+            second_cell.borders[CD.SOUTH] = first_cell
