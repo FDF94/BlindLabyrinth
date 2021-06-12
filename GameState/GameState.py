@@ -13,8 +13,22 @@ class GameState:
         self._player = player
         self._maze = maze
         self.is_won = False
+
+        # Events
         self.win_event = Event()
         self.sound_event = Event()
+        self.puddle_event = Event()
+        self.whoosh_event = Event()
+        self.knock_event = Event()
+        self.walk_into_event = Event()
+
+        # Events subscription
+        self._maze.wall.knock_event += self.knock_event.notify
+        self._maze.wall.walk_into_event += self.walk_into_event.notify
+        for row in self._maze.cells_grid:
+            for cell in row:
+                cell.puddle_event += self.puddle_event.notify
+                cell.whoosh_event += self.whoosh_event.notify
 
     def set_game_as_won(self):
         self.is_won = True

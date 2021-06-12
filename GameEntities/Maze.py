@@ -1,6 +1,5 @@
 from GameEntities.Cell import Cell
 from GameEntities.Wall import Wall
-from View.View import View
 from typing import List, Tuple
 from random import choice
 from GameState.CardinalDirections import CardinalDirections as CD
@@ -11,24 +10,16 @@ CellGrid = List[CellRow]
 
 class Maze():
 
-    def __init__(self, rows: int, columns: int, view: View):
-        wall = Wall()
+    def __init__(self, rows: int, columns: int):
+        self.wall = Wall()
         self.cells_grid = [
-            [Cell(wall, wall, wall, wall, False, j, i) for i in range(rows)]
+            [Cell(self.wall, self.wall, self.wall, self.wall, False, j, i)
+                for i in range(rows)]
             for j in range(columns)
         ]
         self.cells_grid[0][0].is_winning_cell = True
         self._max_x = rows - 1
         self._max_y = columns - 1
-
-        # Events subscription
-        # ToDo this should definitely not be here
-        wall.knock_event += view.knock_event
-        wall.walk_into_event += view.walk_into_event
-        for row in self.cells_grid:
-            for cell in row:
-                cell.puddle_event += view.puddle_event
-                cell.whoosh_event += view.whoosh_event
 
         self.generate_maze(self.cells_grid)
 

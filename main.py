@@ -24,7 +24,7 @@ def main():
     view = View()
     counter = Counter()
     beeper = Beeper()
-    maze = Maze(3, 3, view)
+    maze = Maze(3, 3)
     origin_cell = maze.cells_grid[-1][-1]
     player = Player(origin_cell, beeper)
     winning_cell = False
@@ -34,6 +34,11 @@ def main():
     counter.tick_event += beeper.count
     beeper.beep_event += game_state.beep_event
     game_state.sound_event += view.sound_event
+    game_state.puddle_event += view.puddle_event
+    game_state.whoosh_event += view.whoosh_event
+    game_state.knock_event += view.knock_event
+    game_state.walk_into_event += view.walk_into_event
+
     player.turn_event += view.turn_event
     player.no_beeper_event += view.no_beeper_event
     print("\nBegin!")
