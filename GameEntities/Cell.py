@@ -31,14 +31,14 @@ class Cell(CellLimit):
 
     def go_in_direction(self, direction):
 
-        next_cell = self._borders[direction].walk_into()
+        next_cell = self.borders[direction].walk_into()
         if next_cell is not None:
             return next_cell
         else:
             return self
 
     def knock_in_direction(self, direction):
-        self._borders[direction].knock()
+        self.borders[direction].knock()
 
     def knock(self) -> None:
         self.whoosh_event.notify()
